@@ -1,0 +1,29 @@
+body {
+    background-color: grey;
+  }
+
+  .card {
+    background-color: grey;
+  }
+  
+
+  table,
+  th,
+  td {
+      border: 1px solid black;
+  }
+  
+
+#tableTalents{
+  background-color: grey;
+}
+
+#tableSkills{
+  float: left;
+}
+
+#tableMiracles{
+  float: left;
+}
+
+

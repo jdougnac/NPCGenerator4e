@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<head>    
+    {% load static %}
+    <link  rel="stylesheet", href="{% static 'css/styles.css' %}" > 
+    <script src="{% static 'js/styles.js' %}" async></script>
+    <title>NPC Generator</title>
+</head>
+
+<html lang ="en">
+
+
+
+<body>
+   
+    <br>
+    <h1>NPC Generator</h1>
+    <a href="/hammer">Home</a><br>
+    <form action="/NPCGenerator4e/NPCGenerator" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" name="save" id = "createButton">Create</button>
+    </form>
+
+
+    <br>
+
+    <div class="card text-left" >
+        <table class="table table-striped" id="tableBasicInfo1">
+            <thead class="thead-dark">
+                <tr>
+
+                    <th scope="col">Name:</th>
+                    <th scope="col">Species:</th>
+                    <th scope="col">Class:</th>
+                    <th scope="col">Path:</th>
+                    <th scope="col"> Level:</th>
+                    <th scope="col">Career:</th>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+
+                    <td scope="row">{{npc.npc.char.name}}</td>
+                    <td scope="row">{{npc.npc.char.species.title}}</td>
+                    <td scope="row">{{npc.npc.char.careerClass}}</td>
+                    <td scope="row">{{npc.npc.char.careerPath}} </td>
+                    <td scope="row">{{npc.npc.char.level}}</td>
+                    <td scope="row">{{npc.npc.char.careerName.title}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table class="table table-striped" id="tableBasicInfo2">
+            <thead>
+                <tr>
+                    <th>Age:</th>
+                    <th>Height:</th>
+                    <th>Hair:</th>
+                    <th>Eyes:</th>
+                    <th>Resilience:</th>
+                    <th>Resolve:</th>                    
+                    <th>Fate:</th>
+                    <th>Fortune:</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td>{{npc.npc.char.age}}</td>
+                <td>{{npc.npc.char.height}}</td>
+                <td>{{npc.npc.char.hairColour}}</td>
+                <td>{{npc.npc.char.eyeColour}}</td>
+                <td>{{npc.npc.char.resilience}}</td>
+                <td>{{npc.npc.char.resilience}}</td>
+                <td>{{npc.npc.char.fate}}</td>
+                <td>{{npc.npc.char.fate}}</td>
+
+            </tr>
+
+
+        </table>
+        <br>
+    </div>
+
+    <div>
+        <table class="table table-striped" id="tableBasicInfo3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Movement Stat:</th>
+                    <th>Walk:</th>
+                    <th>Run:</th>
+                    <th>Wounds:</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td> {{npc.npc.char.movement}}</td>
+                <td> {{npc.npc.char.walkMovement}}</td>
+                <td> {{npc.npc.char.runMovement}}</td>                
+                <td> {{npc.npc.char.wounds}}</td>  
+            </tr>
+        </table>
+        <br>
+
+    </div>
+    <div>
+        <table class="table table-striped" id="tableCharacteristics">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Characteristics:</th>
+                    <th>WS</th>
+                    <th>BS</th>
+                    <th>S</th>
+                    <th>T</th>
+                    <th>I</th>
+                    <th>Ag</th>
+                    <th>Dex</th>
+                    <th>Int</th>
+                    <th>WP</th>
+                    <th>Fel</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <th>Base:</th>
+                <td>{{npc.npc.char.attributes.0}} </td>
+                <td>{{npc.npc.char.attributes.1}} </td>
+                <td>{{npc.npc.char.attributes.2}} </td>
+                <td>{{npc.npc.char.attributes.3}} </td>
+                <td>{{npc.npc.char.attributes.4}} </td>
+                <td>{{npc.npc.char.attributes.5}} </td>
+                <td>{{npc.npc.char.attributes.6}} </td>
+                <td>{{npc.npc.char.attributes.7}} </td>
+                <td>{{npc.npc.char.attributes.8}} </td>
+                <td>{{npc.npc.char.attributes.9}} </td>
+            </tr>
+            <tr>
+                <th>Advances:</th>
+                <td>{{npc.npc.char.attributeAdvances.0}} </td>
+                <td>{{npc.npc.char.attributeAdvances.1}} </td>
+                <td>{{npc.npc.char.attributeAdvances.2}} </td>
+                <td>{{npc.npc.char.attributeAdvances.3}} </td>
+                <td>{{npc.npc.char.attributeAdvances.4}} </td>
+                <td>{{npc.npc.char.attributeAdvances.5}} </td>
+                <td>{{npc.npc.char.attributeAdvances.6}} </td>
+                <td>{{npc.npc.char.attributeAdvances.7}} </td>
+                <td>{{npc.npc.char.attributeAdvances.8}} </td>
+                <td>{{npc.npc.char.attributeAdvances.9}} </td>
+            </tr>
+            <tr>
+                <th>Total:</th>
+
+                {% for x in npc.npc.char.total_stats %}
+                <td>
+
+
+                    {{x}}
+
+                </td>
+                {% endfor %}
+
+            </tr>
+
+        </tbody>
+        </table>
+
+    </div>
+
+    <div class="card text-center" style=" width: 50%;" id = "secondCard"> 
+       
+            <div>
+                <table class="table table-striped" id="tableSkills">
+                    <thead class="thead-dark">
+
+                        <th>Skills</th>
+                        <tr>
+                            <th>Name </th>
+                            <th colspan="2">Characteristic</th>                             
+                            <th>Adv</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    {% for x in npc.npc.char.finalSkills %}
+                    <tr>
+                        <th>{{x.0.title}}</th>
+                        <th>{{x.2}}</th>
+                        <th>{{x.3}}</th>
+                        <th>{{x.1}}</th>
+                        <th>{{x.4}}</th>
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+
+                <table class="table table-striped" id="tableTalents">
+                    <th>Talents:</th>
+
+                    {% for x in npc.npc.char.careerTalents %}
+                    <tr>
+
+
+                        <td>{{x.title}}</td>
+
+                    </tr>
+                    {% endfor %}
+
+
+                </table>
+            </div>
+     
+
+        </div>
+    <div id = "fourthCard">
+            <div class="col-6">
+                <table class="table table-striped" id="tableBlessings">
+                    
+
+                    {% if npc.npc.char.blessings %}
+                    <th>Blessings:</th>
+
+                    {% for x in npc.npc.char.blessings %}
+                    <tr>
+
+
+                        <td>{{x}}</td>
+
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+
+
+                </table>
+            </div>
+
+            <div class="col-6">
+                <table class="table table-striped" id="tableMiracles">
+                    
+
+                    {% if npc.npc.char.miracles %}
+                    <th>Miracles:</th>
+
+                    {% for x in npc.npc.char.miracles %}
+                    <tr>
+
+
+                        <td>{{x}}</td>
+
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+
+
+                </table>
+            </div>
+
+            <div class="col-6">
+                <table class="table table-striped" id="tablePettyMagic">
+                    
+
+                    {% if npc.npc.char.pettyMagicSpells %}
+                    <th>Petty Magic:</th>
+
+                    {% for x in npc.npc.char.pettyMagicSpells %}
+                    <tr>
+
+
+                        <td>{{x}}</td>
+
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+
+
+                </table>
+            </div>
+
+            <div class="col-6">
+                <table class="table table-striped" id="tableWindSpells">
+                    
+
+                    {% if npc.npc.char.windSpells %}
+                    <th>Spells:</th>
+
+                    {% for x in npc.npc.char.windSpells %}
+                    <tr>
+
+
+                        <td>{{x}}</td>
+
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+
+
+                </table>
+            </div>      
+            <div class="col-6">
+                <table class="table table-striped" id="tableTrappings">
+                            
+                    <th>Trappings:</th>
+
+                    {% for x in npc.npc.char.classTrappings %}
+                    <tr>
+
+
+                        <td>{{x.title}}</td>
+
+                    </tr>
+                    {% endfor %}
+                    {% for x in npc.npc.char.careerTrappings %}
+                    <tr>
+
+
+                        <td>{{x.title}}</td>
+
+                    </tr>
+                    {% endfor %}  
+
+
+                </table>
+            </div>          
+        </div>
+    </div>
+    
+
+
+
+
+</body>
+
+<script>
+    window.addEventListener("DOMContentLoaded", (event) => {
+    const windsOfMagicCheck = document.getElementById("id_books_0");
+    const upInArmsCheck = document.getElementById("id_books_1");
+    const speciesRoot = document.getElementById("id_species") 
+    const careerRoot = document.getElementById("id_career") 
+
+    const additionalWoMSpeciesList = [['combat familiar','combatFamiliar','Combat Familiar'],['spell familiar','spellFamiliar','Spell Familiar']];
+    const additionalWoMCareerList = [['alchemist','Alchemist'], ['astromancer','Astromancer'],['beadle','Beadle'],['combat familiar','Combat Familiar'],
+    ['druid','Druid'],['hierophant','Hierophant'],['magister vigilant','Magister Vigilant'],['mundane alchemist','Mundane Alchemist'],['pyromancer','Pyromancer'],['scryer','Scryer'],
+    ['shadowmancer','Shadowmancer'],['shaman','Shaman'],['spell familiar','Spell Familiar'],['spiriter','Spiriter']]
+    const additionalUiASpeciesList = [['tilean human','tileanHuman','Tilean Human']]
+    const additionalUiACareerList = [['archer','Archer'],['camp follower','Camp Follower'],['cartographer','Cartographer'],['freelance','Freelance'],['greatsword','Greatsword'],
+['halberdier','Halberdier'],['handgunner','Handgunner'],['knight panther','Knight Panther'],['knight of the blazing sun','Knight of the Blazing Sun'],['knight of the white wolf','Knight of the White Wolf'],
+['light cavalry','Light Cavalry'],['pikeman','Pikeman'],['priest of myrmidia','Priest of Myrmidia'],['siege specialist','Siege Specialist']]
+
+
+    function addSpecies(additionalSpeciesList) {
+        //for (let i = 0; i < additionalWoMSpeciesList.length; i++) {
+        for (let i = 0; i < additionalSpeciesList.length; i++) {
+            let label = document.createElement("label");
+            let input = document.createElement("input");
+            //label.innerText = additionalWoMSpeciesList[i][2]+'\n';
+            //input.value = additionalWoMSpeciesList[i][0]
+            label.innerText = additionalSpeciesList[i][2]+'\n';
+            input.value = additionalSpeciesList[i][0]
+            input.type = "radio";
+            input.name = "species";              
+            label.prepend(input);
+            //label.id = additionalWoMSpeciesList[i][1]
+            label.id = additionalSpeciesList[i][1]
+            speciesRoot.appendChild(label);
+                }
+    }
+
+function addCareers(additionalCareerList)
+{
+    for (let f = 0; f < additionalCareerList.length; f++) {
+            let option = document.createElement("option")
+            option.value = additionalCareerList[f][0]
+            option.id = additionalCareerList[f][0]
+            option.innerText = additionalCareerList[f][1]
+            careerRoot.appendChild(option)
+                }
+}
+
+function removeAdditionalSpecies(additionalSpeciesList)
+{
+    for (var x=0; x<additionalSpeciesList.length; x++){
+                var deleteSpecies = document.getElementById(additionalSpeciesList[x][1]);                    
+                deleteSpecies.remove()
+                }
+}
+
+function removeAdditionalCareers(additionalCareerList)
+{
+    for (var z=0; z<additionalCareerList.length; z++){
+                var deleteCareer = document.getElementById(additionalCareerList[z][0]); 
+                deleteCareer.remove()
+                }  
+}
+
+    if (windsOfMagicCheck.checked) {
+            addSpecies(additionalWoMSpeciesList)
+        }
+
+    if (upInArmsCheck.checked) {
+            addSpecies(additionalUiASpeciesList)
+        }        
+
+    windsOfMagicCheck.addEventListener('change', () => {
+        if (windsOfMagicCheck.checked) {
+            addSpecies(additionalWoMSpeciesList)
+            addCareers(additionalWoMCareerList)
+        } else {              
+            removeAdditionalSpecies(additionalWoMSpeciesList)
+            removeAdditionalCareers(additionalWoMCareerList)
+        }
+    });
+
+    upInArmsCheck.addEventListener('change', () => {
+        if (upInArmsCheck.checked) {
+            addSpecies(additionalUiASpeciesList)
+            addCareers(additionalUiACareerList)
+        } else {              
+            removeAdditionalSpecies(additionalUiASpeciesList)
+            removeAdditionalCareers(additionalUiACareerList)
+        }
+    });    
+
+});
+
+</script>
+</html>
